@@ -28,5 +28,8 @@ module.exports = {
   },
   async delete(req, res, next) {
     //DELETE
+  },
+  async update(req, res, next) {
+    //UPDATE
   }
 };
