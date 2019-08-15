@@ -1,11 +1,15 @@
-module.exports = express => {
-  const app = express();
-  const mongoose = require('mongoose');
-  const port = 3000;
+const express = require('express');
+const mongoose = require('mongoose');
+const routes = require('../routes');
+const bodyParser = require('body-parser');
+const app = express();
 
-  app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-  });
+mongoose.connect('mongodb://localhost:27017/vantum', {
+  useNewUrlParser: true,
+  useCreateIndex: true
+});
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-  app.use(express.json());
-};
+routes(app);
+module.exports = app;
