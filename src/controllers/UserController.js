@@ -2,7 +2,18 @@
 const User = require('../models/User');
 module.exports = {
   async index(req, res, next) {
-    //INDEX
+    const users = await User.find()
+      .sort({ updatedAt: -1, createdAt: -1 })
+      .then(async users => {
+        console.log(users);
+        if (users.length === 0) {
+          res.status(200);
+          res.send({ message: 'Nenhum usuário cadastrado' });
+        }
+        res.status(200);
+        res.send(users);
+      })
+      .catch(err => res.send({ message: err }));
   },
   async store(req, res, next) {
     const { name, email, phoneNumber, address } = req.body;

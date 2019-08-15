@@ -5,6 +5,7 @@ module.exports = app => {
   });
 
   //USER
+  app.get('/user', UserController.index);
   app.post('/user', UserController.store);
   app.get('/user/:id', UserController.show);
   app.put('/user/:id', UserController.update);
