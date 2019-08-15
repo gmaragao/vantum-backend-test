@@ -6,7 +6,8 @@ const app = express();
 
 mongoose.connect('mongodb://localhost:27017/vantum', {
   useNewUrlParser: true,
-  useCreateIndex: true
+  useCreateIndex: true,
+  useFindAndModify: false
 });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
