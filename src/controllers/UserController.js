@@ -40,9 +40,10 @@ module.exports = {
   },
   async show(req, res, next) {
     const { id } = req.params;
-    const user = await User.findById(id).catch(err =>
-      res.send({ message: 'Id incorreto' })
-    );
+    const user = await User.findById(id).catch(err => {
+      res.status(400);
+      res.send({ message: 'Id no formato incorreto' });
+    });
     if (!user) {
       res.status(400);
       res.send({ message: 'Usuário não encontrado' });
@@ -51,9 +52,40 @@ module.exports = {
     res.send(user);
   },
   async delete(req, res, next) {
-    //DELETE
+    const { id } = req.params;
+    const user = await User.findById(id).catch(err => {
+      res.status(400);
+      res.send({ message: 'Id no formato incorreto' });
+    });
+    if (!user) {
+      res.status(400);
+      res.send({ message: 'Usuário não encontrado' });
+    }
+    await User.findByIdAndDelete(id).catch(err => {
+      res.status(400);
+      res.send({ message: err });
+    });
+    res.status(200);
+    res.send({ message: 'Usuário deletado com sucesso' });
   },
   async update(req, res, next) {
-    //UPDATE
+    const { id } = req.params;
+    const updatedUser = {};
+
+    //Just updating if fields are not null
+    if (req.body.name) updatedUser.name = req.body.name;
+    if (req.body.phoneNumber) updatedUser.phoneNumber = req.body.phoneNumber;
+    if (req.body.address) updatedUser.address = req.body.address;
+    if (req.body.email) updatedUser.email = req.body.email;
+    const user = await User.findOneAndUpdate({ _id: id }, updatedUser, {
+      new: true
+    }).catch(err => {
+      res.status(400);
+      res.send({
+        message: 'Id no formato incorreto ou usuário não encontrado'
+      });
+    });
+    res.status(200);
+    res.send(user);
   }
 };
