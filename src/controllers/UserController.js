@@ -27,16 +27,26 @@ module.exports = {
             phoneNumber,
             address
           });
-          await newUser
-            .save()
-            .then(newUser => {
-              res.status(200);
-              res.send(newUser);
-            })
-            .catch(err => {
-              res.status(400);
-              res.send(err);
+          //Checking if the phone number is a valid one
+          const regexPhone = new RegExp('[0-9]{10,11}');
+          if (phoneNumber.match(regexPhone)) {
+            await newUser
+              .save()
+              .then(newUser => {
+                res.status(201);
+                res.send(newUser);
+              })
+              .catch(err => {
+                res.status(400);
+                res.send(err);
+              });
+          } else {
+            res.status(400);
+            res.send({
+              message:
+                'Número de telefone inválido, por favor insira um número válido'
             });
+          }
         } else {
           res.status(400);
           res.send({
