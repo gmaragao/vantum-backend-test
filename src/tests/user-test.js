@@ -8,7 +8,7 @@ const UserController = require('../controllers/UserController');
 describe('User', function() {
   this.beforeAll(async () => {
     mongoose.connect(
-      'mongodb://localhost:27017/medicos-de-rua',
+      'mongodb://localhost:27017/vantum-test',
       {
         useNewUrlParser: true,
         useCreateIndex: true,
