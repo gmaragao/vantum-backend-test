@@ -2,10 +2,10 @@
   "name": "vantum-backend",
   "version": "1.0.0",
   "description": "Backend vantum (API to apply for Jr Web Developer)",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "test": "../node_modules/mocha/bin/mocha ./test",
-    "dev": "nodemon server.js"
+    "test": "mocha src/tests/*test.js --timeout 30000 --exit",
+    "dev": "nodemon app.js"
   },
   "author": "Gabriel Aragão",
   "license": "ISC",

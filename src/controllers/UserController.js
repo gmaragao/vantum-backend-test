@@ -19,7 +19,6 @@ module.exports = {
     const { name, email, phoneNumber, address } = req.body;
     await User.findOne({ email })
       .then(async user => {
-        console.log(user);
         if (!user) {
           const newUser = new User({
             name,
@@ -50,7 +49,7 @@ module.exports = {
         } else {
           res.status(400);
           res.send({
-            error: `Usuário com email ${email} já cadastrado`
+            message: `Usuário com email ${email} já cadastrado`
           });
         }
       })
